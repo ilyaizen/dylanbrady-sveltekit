@@ -194,7 +194,7 @@
 				<span class="welcome-animation-word inline-block text-7xl font-bold tracking-tighter"
 					>{isHebrew ? 'אני' : "I'm"}</span
 				>
-				<span>&nbsp;</span>
+				<span class="inline text-3xl sm:text-5xl font-bold tracking-tighter mr-2">&nbsp;</span>
 				{#each [slice.primary.first_name, slice.primary.last_name] as word}
 					<span class="welcome-animation-name inline text-9xl font-bold tracking-tighter mr-2"
 						>{word}</span
