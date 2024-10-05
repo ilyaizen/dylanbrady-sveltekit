@@ -5,5 +5,5 @@
 </script>
 
 <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
-	Placeholder component for {slice.slice_type} (variation: {slice.variation}) Slices
+	<p class="text-red-500 text-4xl">{slice.primary.hello_world}</p>
 </section>
