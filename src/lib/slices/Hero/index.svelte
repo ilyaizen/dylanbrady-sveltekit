@@ -45,18 +45,7 @@
 				}
 			)
 			.fromTo(
-				'.welcome-animation-2',
-				{
-					opacity: 0
-				},
-				{
-					opacity: 1,
-					duration: 0.001 // Nearly instantaneous opacity change
-				},
-				'-=0.3'
-			)
-			.fromTo(
-				'.welcome-animation-3',
+				'.welcome-animation-name',
 				{
 					x: -10,
 					opacity: 0
@@ -182,12 +171,7 @@
 	});
 </script>
 
-<section
-	data-slice-type={slice.slice_type}
-	data-slice-variation={slice.variation}
-	class=""
-	id="hero"
->
+<section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} id="hero">
 	<div class="pt-40 flex gap-2 justify-between">
 		<div class="flex flex-col flex-1 space-y-1.5">
 			<div class="flex flex-wrap items-center">
@@ -210,11 +194,10 @@
 				<span class="welcome-animation-word inline-block text-7xl font-bold tracking-tighter"
 					>{isHebrew ? 'אני' : "I'm"}</span
 				>
-				{#each [slice.primary.first_name, slice.primary.last_name] as word, index}
-					<span
-						class="welcome-animation-3 inline-block text-7xl font-bold tracking-tighter {isHebrew
-							? 'mr-2'
-							: 'ml-2'}">{word}</span
+				<span>&nbsp;</span>
+				{#each [slice.primary.first_name, slice.primary.last_name] as word}
+					<span class="welcome-animation-name inline text-9xl font-bold tracking-tighter mr-2"
+						>{word}</span
 					>
 				{/each}
 			</div>
@@ -227,15 +210,15 @@
 				{/if}
 			</div>
 		</div>
-		<!-- <span
-			class="profile-image-animation flex overflow-hidden relative shrink-0 size-28 rounded-full shadow-xl"
-		>
-			<div role="figure" class="aspect-square w-full h-full">
-				<PrismicImage field={slice.primary.profile_picture} />
-			</div>
-		</span> -->
 	</div>
-	<section id="about">
+	<!-- <span
+		class="profile-image-animation flex overflow-hidden relative shrink-0 size-28 rounded-full shadow-xl"
+	>
+		<div role="figure" class="aspect-square w-full h-full">
+			<PrismicImage field={slice.primary.profile_picture} />
+		</div>
+	</span> -->
+	<!-- <section id="about">
 		<h2 class="text-xl font-bold about-heading pt-8">{slice.primary.about_heading}</h2>
 		<div class="max-w-full text-sm text-muted-foreground pt-4">
 			{#if slice.primary.about_line}
@@ -244,5 +227,5 @@
 				{/each}
 			{/if}
 		</div>
-	</section>
+	</section> -->
 </section>

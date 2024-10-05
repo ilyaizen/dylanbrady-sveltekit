@@ -92,7 +92,7 @@
 	{/if}
 </svelte:head>
 
-<div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-2xl">
+<div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-7xl">
 	{#if $loading}
 		<Loader onLoadComplete={handleLoadComplete} />
 	{:else}
