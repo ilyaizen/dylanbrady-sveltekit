@@ -18,6 +18,49 @@
             "label": "Hello World",
             "placeholder": ""
           }
+        },
+        "profile_picture": {
+          "type": "Image",
+          "config": {
+            "label": "Profile Picture",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "first_name": {
+          "type": "Text",
+          "config": {
+            "label": "First Name",
+            "placeholder": ""
+          }
+        },
+        "last_name": {
+          "type": "Text",
+          "config": {
+            "label": "Last Name",
+            "placeholder": ""
+          }
+        },
+        "tag_line": {
+          "type": "Text",
+          "config": {
+            "label": "Tag Line",
+            "placeholder": ""
+          }
+        },
+        "about_heading": {
+          "type": "Text",
+          "config": {
+            "label": "About Heading",
+            "placeholder": ""
+          }
+        },
+        "about_line": {
+          "type": "Text",
+          "config": {
+            "label": "About Line",
+            "placeholder": ""
+          }
         }
       },
       "items": {}

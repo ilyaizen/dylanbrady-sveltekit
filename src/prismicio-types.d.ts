@@ -94,6 +94,66 @@ export interface HeroSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#key-text
 	 */
 	hello_world: prismic.KeyTextField;
+
+	/**
+	 * Profile Picture field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.default.primary.profile_picture
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	profile_picture: prismic.ImageField<never>;
+
+	/**
+	 * First Name field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.default.primary.first_name
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	first_name: prismic.KeyTextField;
+
+	/**
+	 * Last Name field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.default.primary.last_name
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	last_name: prismic.KeyTextField;
+
+	/**
+	 * Tag Line field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.default.primary.tag_line
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	tag_line: prismic.KeyTextField;
+
+	/**
+	 * About Heading field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.default.primary.about_heading
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	about_heading: prismic.KeyTextField;
+
+	/**
+	 * About Line field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.default.primary.about_line
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	about_line: prismic.KeyTextField;
 }
 
 /**
