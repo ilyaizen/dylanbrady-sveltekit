@@ -96,7 +96,7 @@
 	{#if $loading}
 		<Loader onLoadComplete={handleLoadComplete} />
 	{:else}
-		<div class="fixed top-4 right-4 flex gap-2 z-50">
+		<div class="fixed bottom-4 right-4 flex gap-2 z-50">
 			<Button variant="ghost" size="icon" on:click={toggleLanguage}>
 				{$lang === 'en-us' ? 'עב' : 'En'}
 				<span class="sr-only">Toggle language</span>

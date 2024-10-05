@@ -9,7 +9,7 @@
 
 	$: isHebrew = $page.params.lang === 'he';
 
-	$: greetings = isHebrew ? ['שלום', 'שלום,'] : ['Hey', 'there,'];
+	$: greetings = isHebrew ? ['שלום'] : ['Hey', 'there'];
 
 	onMount(() => {
 		const tl = gsap.timeline({
@@ -20,15 +20,15 @@
 		});
 
 		tl.fromTo(
-			'.welcome-animation-1',
+			'.welcome-animation-word',
 			{
 				opacity: 0
 			},
 			{
 				delay: 0.5,
 				opacity: 1,
-				duration: 0.001, // Nearly instantaneous opacity change
-				stagger: 0.2 // Delay between each word
+				duration: 0.001,
+				stagger: 0.1 // Reduced from 0.2 to 0.1 for quicker animation
 			}
 		)
 			.fromTo(
@@ -41,7 +41,7 @@
 					x: 0,
 					opacity: 1,
 					ease: 'expo.out',
-					duration: 0.8
+					duration: 0.4 // Reduced from 0.8 to 0.4
 				}
 			)
 			.fromTo(
@@ -190,27 +190,31 @@
 >
 	<div class="pt-40 flex gap-2 justify-between">
 		<div class="flex flex-col flex-1 space-y-1.5">
-			<div class="flex flex-wrap">
-				{#each greetings as word}
-					<span
-						class="welcome-animation-1 inline-block text-3xl sm:text-5xl font-bold tracking-tighter mr-2"
+			<div class="flex flex-wrap items-center">
+				{#each greetings as word, index}
+					<span class="welcome-animation-word inline-block text-7xl font-bold tracking-tighter"
 						>{word}</span
 					>
+					{#if !isHebrew && index === 0}
+						<span class="welcome-animation-word inline-block text-7xl font-bold tracking-tighter"
+							>&nbsp;</span
+						>
+					{/if}
 				{/each}
 				<span
-					class="wave-animation inline-block text-3xl sm:text-5xl font-bold tracking-tighter cursor-pointer"
+					class="wave-animation inline-block text-7xl font-bold tracking-tighter cursor-pointer ml-2"
 					>👋</span
 				>
 			</div>
-			<div class="flex flex-wrap">
-				<span
-					class="welcome-animation-2 inline text-3xl sm:text-5xl font-bold tracking-tighter mr-2"
+			<div class="flex flex-wrap items-center">
+				<span class="welcome-animation-word inline-block text-7xl font-bold tracking-tighter"
 					>{isHebrew ? 'אני' : "I'm"}</span
 				>
-				{#each [slice.primary.first_name, slice.primary.last_name] as word}
+				{#each [slice.primary.first_name, slice.primary.last_name] as word, index}
 					<span
-						class="welcome-animation-3 inline text-3xl sm:text-5xl font-bold tracking-tighter mr-2"
-						>{word}</span
+						class="welcome-animation-3 inline-block text-7xl font-bold tracking-tighter {isHebrew
+							? 'mr-2'
+							: 'ml-2'}">{word}</span
 					>
 				{/each}
 			</div>
@@ -223,13 +227,13 @@
 				{/if}
 			</div>
 		</div>
-		<span
+		<!-- <span
 			class="profile-image-animation flex overflow-hidden relative shrink-0 size-28 rounded-full shadow-xl"
 		>
 			<div role="figure" class="aspect-square w-full h-full">
 				<PrismicImage field={slice.primary.profile_picture} />
 			</div>
-		</span>
+		</span> -->
 	</div>
 	<section id="about">
 		<h2 class="text-xl font-bold about-heading pt-8">{slice.primary.about_heading}</h2>
