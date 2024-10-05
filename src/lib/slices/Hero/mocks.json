@@ -1,0 +1,14 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"hello_world": {
+				"__TYPE__": "FieldContent",
+				"value": "table",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]
