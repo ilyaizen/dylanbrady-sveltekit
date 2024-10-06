@@ -5,7 +5,7 @@
   import { goto } from '$app/navigation';
   import { writable } from 'svelte/store';
   import { tweened } from 'svelte/motion';
-  import { cubicOut } from 'svelte/easing';
+  import { expoOut } from 'svelte/easing';
 
   // Import Prismic preview component
   import { PrismicPreview } from '@prismicio/svelte/kit';
@@ -47,22 +47,6 @@
     ]
   };
 
-  // Animation for pop-up effect
-  function popUpAnimation(node: HTMLElement) {
-    gsap.from(node, {
-      y: -100,
-      opacity: 0,
-      duration: 0.5,
-      ease: 'back.out(1.7)'
-    });
-
-    return {
-      destroy() {
-        // Clean up if needed
-      }
-    };
-  }
-
   // Store for the current language
   const lang = writable('en-us');
 
@@ -73,9 +57,9 @@
   const pageLoaded = writable(false);
 
   let lastScrollY = 0;
-  const dockPosition = tweened(0, {
-    duration: 300,
-    easing: cubicOut
+  const dockPosition = tweened(-100, {
+    duration: 900,
+    easing: expoOut
   });
 
   onMount(() => {
@@ -102,9 +86,12 @@
     // Set pageLoaded to true after a short delay
     setTimeout(() => {
       pageLoaded.set(true);
+      dockPosition.set(0); // Animate the dock into view
     }, 500);
 
     const handleScroll = () => {
+      if (!$pageLoaded) return; // Don't handle scroll events until page is loaded
+
       const currentScrollY = window.scrollY;
       if (Math.abs(currentScrollY - lastScrollY) > 50) {
         if (currentScrollY > lastScrollY) {
@@ -277,6 +264,6 @@
     left: 0;
     right: 0;
     z-index: 50;
-    transition: transform 0.3s ease-out;
+    transition: transform 0.3s cubic-bezier(0, 0.7, 0.1, 1);
   }
 </style>
