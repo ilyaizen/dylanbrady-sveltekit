@@ -45,7 +45,7 @@
     context.scale(width / 310, height / 310);
   };
 
-  $: overlayColor = $darkMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)';
+  $: overlayColor = $darkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
 
   onMount(() => {
     context = canvas.getContext('2d')!;
