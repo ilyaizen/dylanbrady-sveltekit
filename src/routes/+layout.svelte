@@ -19,6 +19,34 @@
   import { Moon, Sun, RotateCcw } from 'lucide-svelte';
   import GradientCanvas from '$lib/components/GradientCanvas.svelte';
 
+  // Lucide Svelte
+  import { Home, PencilLine, TvMinimalPlay } from 'lucide-svelte';
+  // Simple Icons : simpleicons.org
+  // import TwitterSvg from '$lib/svg/web/x.svg';
+  // import GithubSvg from '$lib/svg/web/github.svg';
+  // import LinkedInSvg from '$lib/svg/web/linkedin.svg';
+  // import MailSvg from '$lib/svg/web/gmail.svg';
+  //    Shadcn Components
+  import * as Tooltip from '$lib/components/ui/tooltip';
+  import Separator from '$lib/components/ui/separator/separator.svelte';
+  //   Major Components
+  import Dock from '$lib/components/Dock.svelte';
+  import DockIcon from '$lib/components/DockIcon.svelte';
+
+  let navs = {
+    navbar: [
+      { label: 'Home', icon: Home, href: '/', onClick: () => goto('/') },
+      { label: 'Blog', icon: PencilLine, href: '/blog', onClick: () => goto('/blog') },
+      { label: 'Developer', icon: TvMinimalPlay, href: '/developer', onClick: () => goto('/developer') }
+    ]
+    // contact: [
+    //   { label: 'Github', icon: GithubSvg, href: '#' },
+    //   { label: 'LinkedIn', icon: LinkedInSvg, href: '#' },
+    //   { label: 'X', icon: TwitterSvg, href: '#' },
+    //   { label: 'Email', icon: MailSvg, href: '#' }
+    // ]
+  };
+
   // Store for the current language
   const lang = writable('en-us');
 
@@ -80,6 +108,26 @@
     const newPath = newLang === 'en-us' ? '/' : '/he/';
     goto(newPath + $page.url.pathname.split('/').slice(2).join('/'));
   }
+
+  function handleNavClick(href: string) {
+    console.log('Navigation clicked:', href);
+    goto(href);
+  }
+
+  function handleLanguageToggle() {
+    console.log('Language toggle clicked');
+    toggleLanguage();
+  }
+
+  function handleRefresh() {
+    console.log('Refresh clicked');
+    window.location.reload();
+  }
+
+  function handleDarkModeToggle() {
+    console.log('Dark mode toggle clicked');
+    toggleDarkMode();
+  }
 </script>
 
 <svelte:head>
@@ -102,31 +150,68 @@
   {#if $loading}
     <Loader onLoadComplete={handleLoadComplete} />
   {:else}
-    <div class="fixed bottom-4 right-4 flex gap-2 z-50">
-      <Button variant="ghost" size="icon" on:click={toggleLanguage}>
-        {$lang === 'en-us' ? 'עב' : 'En'}
-        <span class="sr-only">Toggle language</span>
-      </Button>
-      <Button variant="ghost" size="icon" on:click={() => window.location.reload()}>
-        <RotateCcw class="h-[1.2rem] w-[1.2rem]" />
-        <span class="sr-only">Refresh page</span>
-      </Button>
-      <Button variant="ghost" size="icon" on:click={toggleDarkMode}>
-        {#if $darkMode}
-          <Sun class="h-[1.2rem] w-[1.2rem]" />
-          <span class="sr-only">Light mode</span>
-        {:else}
-          <Moon class="h-[1.2rem] w-[1.2rem]" />
-          <span class="sr-only">Dark mode</span>
-        {/if}
-      </Button>
-    </div>
     <main style="font-family: {isRTL ? 'Almoni' : 'Almoni'}, system-ui;">
       <slot />
     </main>
     <PrismicPreview {repositoryName} />
   {/if}
 </div>
+
+<Dock
+  direction="middle"
+  class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
+  let:mouseX
+  let:distance
+  let:magnification
+>
+  {#each navs.navbar as item}
+    <DockIcon {mouseX} {magnification} {distance} on:click={() => handleNavClick(item.href)}>
+      <Tooltip.Root>
+        <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+          <svelte:component this={item.icon} size={22} strokeWidth={1.2} />
+        </Tooltip.Trigger>
+        <Tooltip.Content sideOffset={8}>
+          <p>{item.label}</p>
+        </Tooltip.Content>
+      </Tooltip.Root>
+    </DockIcon>
+  {/each}
+  <Separator orientation="vertical" class="h-full w-[0.6px]" />
+  <DockIcon {mouseX} {magnification} {distance} on:click={handleLanguageToggle}>
+    <Tooltip.Root>
+      <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+        {$lang === 'en-us' ? 'עב' : 'En'}
+      </Tooltip.Trigger>
+      <Tooltip.Content sideOffset={8}>
+        <p>Toggle language</p>
+      </Tooltip.Content>
+    </Tooltip.Root>
+  </DockIcon>
+  <DockIcon {mouseX} {magnification} {distance} on:click={handleRefresh}>
+    <Tooltip.Root>
+      <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+        <RotateCcw size={22} strokeWidth={1.2} />
+      </Tooltip.Trigger>
+      <Tooltip.Content sideOffset={8}>
+        <p>Refresh page</p>
+      </Tooltip.Content>
+    </Tooltip.Root>
+  </DockIcon>
+  <DockIcon {mouseX} {magnification} {distance} on:click={handleDarkModeToggle}>
+    <Tooltip.Root>
+      <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+        {#if $darkMode}
+          <Sun size={22} strokeWidth={1.2} />
+        {:else}
+          <Moon size={22} strokeWidth={1.2} />
+        {/if}
+      </Tooltip.Trigger>
+      <Tooltip.Content sideOffset={8}>
+        <p>{$darkMode ? 'Light mode' : 'Dark mode'}</p>
+      </Tooltip.Content>
+    </Tooltip.Root>
+  </DockIcon>
+</Dock>
 
 <style>
   :global(body) {
