@@ -4,7 +4,7 @@ import type * as prismic from '@prismicio/client';
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type PageDocumentDataSlicesSlice = HeroSlice | RichTextSlice;
+type PageDocumentDataSlicesSlice = EducationSlice | WorkSlice | HeroSlice;
 
 /**
  * Content for Page documents
@@ -80,6 +80,123 @@ export type PageDocument<Lang extends string = string> = prismic.PrismicDocument
 >;
 
 export type AllDocumentTypes = PageDocument;
+
+/**
+ * Item in *Education → Default → Primary → Education Item*
+ */
+export interface EducationSliceDefaultPrimaryEducationItemItem {
+  /**
+   * Education Title field in *Education → Default → Primary → Education Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: education.default.primary.education_item[].education_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  education_title: prismic.KeyTextField;
+
+  /**
+   * Education Description field in *Education → Default → Primary → Education Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: education.default.primary.education_item[].education_description
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  education_description: prismic.KeyTextField;
+
+  /**
+   * Education Dates field in *Education → Default → Primary → Education Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: education.default.primary.education_item[].education_dates
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  education_dates: prismic.KeyTextField;
+
+  /**
+   * Education URL field in *Education → Default → Primary → Education Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: education.default.primary.education_item[].education_url
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  education_url: prismic.KeyTextField;
+
+  /**
+   * Education Icon field in *Education → Default → Primary → Education Item*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: education.default.primary.education_item[].education_icon
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  education_icon: prismic.ImageField<never>;
+
+  /**
+   * Education Icon Color field in *Education → Default → Primary → Education Item*
+   *
+   * - **Field Type**: Color
+   * - **Placeholder**: *None*
+   * - **API ID Path**: education.default.primary.education_item[].education_icon_color
+   * - **Documentation**: https://prismic.io/docs/field#color
+   */
+  education_icon_color: prismic.ColorField;
+}
+
+/**
+ * Primary content in *Education → Default → Primary*
+ */
+export interface EducationSliceDefaultPrimary {
+  /**
+   * Education Heading field in *Education → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: education.default.primary.education_heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  education_heading: prismic.KeyTextField;
+
+  /**
+   * Education Item field in *Education → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: education.default.primary.education_item[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  education_item: prismic.GroupField<Simplify<EducationSliceDefaultPrimaryEducationItemItem>>;
+}
+
+/**
+ * Default variation for Education Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type EducationSliceDefault = prismic.SharedSliceVariation<
+  'default',
+  Simplify<EducationSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Education*
+ */
+type EducationSliceVariation = EducationSliceDefault;
+
+/**
+ * Education Shared Slice
+ *
+ * - **API ID**: `education`
+ * - **Description**: Education
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type EducationSlice = prismic.SharedSlice<'education', EducationSliceVariation>;
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -180,46 +297,117 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<'hero', HeroSliceVariation>;
 
 /**
- * Primary content in *RichText → Default → Primary*
+ * Item in *Work → Default → Primary → Work Item*
  */
-export interface RichTextSliceDefaultPrimary {
+export interface WorkSliceDefaultPrimaryWorkItemItem {
   /**
-   * Content field in *RichText → Default → Primary*
+   * Work Title field in *Work → Default → Primary → Work Item*
    *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Lorem ipsum...
-   * - **API ID Path**: rich_text.default.primary.content
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.default.primary.work_item[].work_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
    */
-  content: prismic.RichTextField;
+  work_title: prismic.KeyTextField;
+
+  /**
+   * Work Description field in *Work → Default → Primary → Work Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.default.primary.work_item[].work_description
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  work_description: prismic.KeyTextField;
+
+  /**
+   * Work Dates field in *Work → Default → Primary → Work Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.default.primary.work_item[].work_dates
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  work_dates: prismic.KeyTextField;
+
+  /**
+   * Work URL field in *Work → Default → Primary → Work Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.default.primary.work_item[].work_url
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  work_url: prismic.KeyTextField;
+
+  /**
+   * Work Icon field in *Work → Default → Primary → Work Item*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.default.primary.work_item[].work_icon
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  work_icon: prismic.ImageField<never>;
+
+  /**
+   * Work Icon Color field in *Work → Default → Primary → Work Item*
+   *
+   * - **Field Type**: Color
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.default.primary.work_item[].work_icon_color
+   * - **Documentation**: https://prismic.io/docs/field#color
+   */
+  work_icon_color: prismic.ColorField;
 }
 
 /**
- * Default variation for RichText Slice
+ * Primary content in *Work → Default → Primary*
+ */
+export interface WorkSliceDefaultPrimary {
+  /**
+   * Work Heading field in *Work → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.default.primary.work_heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  work_heading: prismic.KeyTextField;
+
+  /**
+   * Work Item field in *Work → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: work.default.primary.work_item[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  work_item: prismic.GroupField<Simplify<WorkSliceDefaultPrimaryWorkItemItem>>;
+}
+
+/**
+ * Default variation for Work Slice
  *
  * - **API ID**: `default`
- * - **Description**: RichText
+ * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slice
  */
-export type RichTextSliceDefault = prismic.SharedSliceVariation<
-  'default',
-  Simplify<RichTextSliceDefaultPrimary>,
-  never
->;
+export type WorkSliceDefault = prismic.SharedSliceVariation<'default', Simplify<WorkSliceDefaultPrimary>, never>;
 
 /**
- * Slice variation for *RichText*
+ * Slice variation for *Work*
  */
-type RichTextSliceVariation = RichTextSliceDefault;
+type WorkSliceVariation = WorkSliceDefault;
 
 /**
- * RichText Shared Slice
+ * Work Shared Slice
  *
- * - **API ID**: `rich_text`
- * - **Description**: RichText
+ * - **API ID**: `work`
+ * - **Description**: Work
  * - **Documentation**: https://prismic.io/docs/slice
  */
-export type RichTextSlice = prismic.SharedSlice<'rich_text', RichTextSliceVariation>;
+export type WorkSlice = prismic.SharedSlice<'work', WorkSliceVariation>;
 
 declare module '@prismicio/client' {
   interface CreateClient {
@@ -240,14 +428,20 @@ declare module '@prismicio/client' {
       PageDocumentData,
       PageDocumentDataSlicesSlice,
       AllDocumentTypes,
+      EducationSlice,
+      EducationSliceDefaultPrimaryEducationItemItem,
+      EducationSliceDefaultPrimary,
+      EducationSliceVariation,
+      EducationSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
-      RichTextSlice,
-      RichTextSliceDefaultPrimary,
-      RichTextSliceVariation,
-      RichTextSliceDefault
+      WorkSlice,
+      WorkSliceDefaultPrimaryWorkItemItem,
+      WorkSliceDefaultPrimary,
+      WorkSliceVariation,
+      WorkSliceDefault
     };
   }
 }

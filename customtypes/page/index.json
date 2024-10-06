@@ -27,10 +27,13 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "hero": {
+            "education": {
               "type": "SharedSlice"
             },
-            "rich_text": {
+            "work": {
+              "type": "SharedSlice"
+            },
+            "hero": {
               "type": "SharedSlice"
             }
           }
