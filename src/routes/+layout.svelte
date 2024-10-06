@@ -16,6 +16,7 @@
   import { gsap } from 'gsap';
   import { Button } from '$lib/components/ui/button';
   import { Moon, Sun, RotateCcw } from 'lucide-svelte';
+  import GradientCanvas from '$lib/components/GradientCanvas.svelte';
 
   // Store for the current language
   const lang = writable('en-us');
@@ -94,7 +95,9 @@
   {/if}
 </svelte:head>
 
-<div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-7xl">
+<GradientCanvas />
+
+<div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-7xl relative z-10">
   {#if $loading}
     <Loader onLoadComplete={handleLoadComplete} />
   {:else}
