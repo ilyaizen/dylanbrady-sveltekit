@@ -17,8 +17,8 @@ export const repositoryName = import.meta.env.VITE_PRISMIC_ENVIRONMENT || sm.rep
  */
 // Update the routes array to handle both language-specific and default routes
 const routes = [
-	{ type: 'page', path: '/he/:uid' },
-	{ type: 'page', path: '/:uid' }
+  { type: 'page', path: '/he/:uid' },
+  { type: 'page', path: '/:uid' }
 ];
 
 /**
@@ -29,21 +29,21 @@ const routes = [
  */
 
 export const createClient = ({ cookies = undefined, ...config } = {}) => {
-	const client = prismic.createClient(sm.apiEndpoint || repositoryName, {
-		routes,
-		...config
-	});
-	enableAutoPreviews({ client, cookies });
-	return client;
+  const client = prismic.createClient(sm.apiEndpoint || repositoryName, {
+    routes,
+    ...config
+  });
+  enableAutoPreviews({ client, cookies });
+  return client;
 };
 
 // Add a helper function to get supported languages
 export const getSupportedLanguages = () => {
-	// Replace with your actual supported languages
-	return ['he', 'en-us'];
+  // Replace with your actual supported languages
+  return ['he', 'en-us'];
 };
 
 // Add a helper function to check if a language is supported
 export const isSupportedLanguage = (lang: string) => {
-	return lang === 'he' || lang === undefined || lang === '';
+  return lang === 'he' || lang === undefined || lang === '';
 };

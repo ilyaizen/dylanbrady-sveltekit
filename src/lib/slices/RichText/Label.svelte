@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { RTLabelNode } from '@prismicio/client';
+  import type { RTLabelNode } from '@prismicio/client';
 
-	export let node: RTLabelNode;
+  export let node: RTLabelNode;
 </script>
 
 {#if node.data.label === 'codespan'}
-	<code><slot /></code>
+  <code><slot /></code>
 {:else}
-	<span class={node.data.label}><slot /></span>
+  <span class={node.data.label}><slot /></span>
 {/if}
