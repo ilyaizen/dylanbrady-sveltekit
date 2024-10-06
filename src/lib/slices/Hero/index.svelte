@@ -197,35 +197,54 @@
 </script>
 
 <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} id="hero">
-  <div class="pt-40 flex flex-col space-y-4">
-    <div class="flex flex-wrap items-center">
-      {#each greetings as word}
+  <div class="pt-40 flex flex-row items-start justify-between">
+    <div class="flex flex-col space-y-4">
+      <div class="flex flex-wrap items-center">
+        {#each greetings as word}
+          <span class="welcome-animation-word inline-block text-5xl sm:text-7xl font-extrabold tracking-tight">
+            {word}&nbsp;
+          </span>
+        {/each}
+        <span class="wave-animation inline-block text-5xl sm:text-7xl font-extrabold cursor-pointer ml-2 tracking-tight"
+          >👋</span
+        >
+      </div>
+
+      <div class="flex flex-wrap items-center">
         <span class="welcome-animation-word inline-block text-5xl sm:text-7xl font-extrabold tracking-tight">
-          {word}&nbsp;
+          {isHebrew ? 'אני' : "I'm"}&nbsp;
         </span>
-      {/each}
-      <span class="wave-animation inline-block text-5xl sm:text-7xl font-extrabold cursor-pointer ml-2 tracking-tight"
-        >👋</span
-      >
-    </div>
-
-    <div class="flex flex-wrap items-center">
-      <span class="welcome-animation-word inline-block text-5xl sm:text-7xl font-extrabold tracking-tight">
-        {isHebrew ? 'אני' : "I'm"}&nbsp;
-      </span>
-      {#each [slice.primary.first_name, slice.primary.last_name] as word}
-        <span class="welcome-animation-name inline-block text-6xl sm:text-8xl font-black">
-          {word}&nbsp;
-        </span>
-      {/each}
-    </div>
-
-    {#if slice.primary.tag_line}
-      <div class="flex flex-wrap">
-        {#each slice.primary.tag_line.split(' ') as word}
-          <span class="tagline-animation inline-block text-sm sm:text-xl">{word}&nbsp;</span>
+        {#each [slice.primary.first_name, slice.primary.last_name] as word}
+          <span class="welcome-animation-name inline-block text-6xl sm:text-8xl font-black">
+            {word}&nbsp;
+          </span>
         {/each}
       </div>
-    {/if}
+
+      {#if slice.primary.tag_line}
+        <div class="flex flex-wrap font-roboto">
+          {#each slice.primary.tag_line.split(' ') as word}
+            <span class="tagline-animation inline-block text-sm sm:text-xl">{word}&nbsp;</span>
+          {/each}
+        </div>
+      {/if}
+    </div>
+
+    <span class="profile-image-animation flex overflow-hidden relative shrink-0 size-48 rounded-full shadow-xl ml-4">
+      <div role="figure" class="aspect-square w-full h-full">
+        <PrismicImage field={slice.primary.profile_picture} />
+      </div>
+    </span>
   </div>
+
+  <section id="about" class="font-roboto">
+    <h2 class="text-xl font-bold about-heading pt-8">{slice.primary.about_heading}</h2>
+    <div class="max-w-full pt-4">
+      {#if slice.primary.about_line}
+        {#each slice.primary.about_line.split(' ') as word}
+          <span class="about-text-animation inline-block">{word}&nbsp;</span>
+        {/each}
+      {/if}
+    </div>
+  </section>
 </section>

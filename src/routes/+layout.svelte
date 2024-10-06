@@ -8,6 +8,7 @@
   import '@fontsource-variable/grandstander';
   import '@fontsource/abril-fatface';
   import '@fontsource-variable/montserrat';
+  import '@fontsource/roboto';
   import '$lib/styles/hebrew-font.css';
   import '../app.css';
   import Loader from '$lib/components/Loader.svelte';
@@ -43,7 +44,7 @@
     // Update body class and animate when dark mode changes
     const unsubscribeDarkMode = darkMode.subscribe(($darkMode) => {
       document.body.classList.toggle('dark', $darkMode);
-      animateThemeChange($darkMode ? '#1a1a1a' : '#ffffff', $darkMode ? '#ffffff' : '#000000');
+      animateThemeChange($darkMode ? '#000000' : '#ffffff', $darkMode ? '#ffffff' : '#000000');
       localStorage.setItem('darkMode', JSON.stringify($darkMode));
     });
 
@@ -97,7 +98,7 @@
 
 <GradientCanvas />
 
-<div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-7xl relative z-10">
+<div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-5xl relative z-10">
   {#if $loading}
     <Loader onLoadComplete={handleLoadComplete} />
   {:else}
