@@ -69,7 +69,12 @@
   }
 </script>
 
-<section id="education" data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
+<section
+  class="max-w-xl mx-auto"
+  id="education"
+  data-slice-type={slice.slice_type}
+  data-slice-variation={slice.variation}
+>
   <h2 class="education-heading-animation text-xl font-bold pt-4 pb-4">
     {slice.primary.education_heading}
   </h2>
@@ -77,7 +82,7 @@
     {#each slice.primary.education_item as item}
       <div class="education-item-animation">
         <a class="block cursor-pointer pb-4" href={item.education_url}>
-          <div class="rounded-xl bg-card text-card-foreground flex items-center">
+          <div class="rounded-full bg-card/20 text-card-foreground flex items-center">
             <div class="flex-none">
               <span
                 class="relative flex shrink-0 overflow-hidden rounded-full border size-12 m-auto bg-muted-background dark:bg-foreground"

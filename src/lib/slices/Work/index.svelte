@@ -50,13 +50,13 @@
   }
 </script>
 
-<section id="work" data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
+<section class="max-w-xl mx-auto" id="work" data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
   <h2 class="work-heading-animation text-xl font-bold pt-8 pb-4">{slice.primary.work_heading}</h2>
   <div>
     {#each slice.primary.work_item as item}
       <div class="work-item-animation">
         <a class="block cursor-pointer pb-4" href={item.work_url}>
-          <div class="rounded-xl bg-card/50 text-card-foreground/50 flex items-center">
+          <div class="rounded-full bg-card/20 text-card-foreground flex items-center">
             <div class="flex-none">
               <span
                 class="relative flex shrink-0 overflow-hidden rounded-full border size-12 m-auto bg-muted-background dark:bg-foreground"

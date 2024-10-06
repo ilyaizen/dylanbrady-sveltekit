@@ -4,6 +4,8 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import { writable } from 'svelte/store';
+  import { tweened } from 'svelte/motion';
+  import { cubicOut } from 'svelte/easing';
 
   // Import Prismic preview component
   import { PrismicPreview } from '@prismicio/svelte/kit';
@@ -48,7 +50,7 @@
   // Animation for pop-up effect
   function popUpAnimation(node: HTMLElement) {
     gsap.from(node, {
-      y: 100,
+      y: -100,
       opacity: 0,
       duration: 0.5,
       ease: 'back.out(1.7)'
@@ -69,6 +71,12 @@
 
   // Store for page load status
   const pageLoaded = writable(false);
+
+  let lastScrollY = 0;
+  const dockPosition = tweened(0, {
+    duration: 300,
+    easing: cubicOut
+  });
 
   onMount(() => {
     // Update language based on page data
@@ -96,10 +104,27 @@
       pageLoaded.set(true);
     }, 500);
 
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (Math.abs(currentScrollY - lastScrollY) > 50) {
+        if (currentScrollY > lastScrollY) {
+          // Scrolling down
+          dockPosition.set(-100);
+        } else {
+          // Scrolling up
+          dockPosition.set(0);
+        }
+        lastScrollY = currentScrollY;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
     // Cleanup subscriptions on component unmount
     return () => {
       unsubscribe();
       unsubscribeDarkMode();
+      window.removeEventListener('scroll', handleScroll);
     };
   });
 
@@ -162,7 +187,7 @@
 <GradientCanvas />
 
 <!-- Main content container -->
-<div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-5xl relative z-10">
+<div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-3xl relative z-10">
   {#if $loading}
     <Loader onLoadComplete={() => ($loading = false)} />
   {:else}
@@ -175,10 +200,10 @@
 
 <!-- Dock with navigation and control icons -->
 {#if $pageLoaded}
-  <div class="dock-container" use:popUpAnimation>
+  <div class="dock-container" style="transform: translateY({$dockPosition}px);">
     <Dock
       direction="middle"
-      class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
+      class="fixed top-0 left-1/2 -translate-x-1/2 z-50 rounded-full bg-white/20 dark:bg-black/20"
       let:mouseX
       let:distance
       let:magnification
@@ -261,9 +286,10 @@
   /* Dock container positioning */
   .dock-container {
     position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 50;
+    transition: transform 0.3s ease-out;
   }
 </style>
