@@ -200,21 +200,21 @@
   <div class="pt-40 flex flex-col space-y-4">
     <div class="flex flex-wrap items-center">
       {#each greetings as word}
-        <span class="welcome-animation-word inline-block text-5xl sm:text-7xl font-extrabold tracking-tighter">
+        <span class="welcome-animation-word inline-block text-5xl sm:text-7xl font-extrabold tracking-tight">
           {word}&nbsp;
         </span>
       {/each}
-      <span class="wave-animation inline-block text-5xl sm:text-7xl font-extrabold tracking-tighter cursor-pointer ml-2"
+      <span class="wave-animation inline-block text-5xl sm:text-7xl font-extrabold cursor-pointer ml-2 tracking-tight"
         >👋</span
       >
     </div>
 
     <div class="flex flex-wrap items-center">
-      <span class="welcome-animation-word inline-block text-5xl sm:text-7xl font-extrabold tracking-tighter">
+      <span class="welcome-animation-word inline-block text-5xl sm:text-7xl font-extrabold tracking-tight">
         {isHebrew ? 'אני' : "I'm"}&nbsp;
       </span>
       {#each [slice.primary.first_name, slice.primary.last_name] as word}
-        <span class="welcome-animation-name inline-block text-6xl sm:text-8xl font-black tracking-tighter">
+        <span class="welcome-animation-name inline-block text-6xl sm:text-8xl font-black">
           {word}&nbsp;
         </span>
       {/each}

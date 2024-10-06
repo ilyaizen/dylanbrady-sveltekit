@@ -120,7 +120,7 @@
         {/if}
       </Button>
     </div>
-    <main style="font-family: {isRTL ? 'Kedem Sans' : 'Kedem Sans'}, system-ui;">
+    <main style="font-family: {isRTL ? 'Almoni' : 'Almoni'}, system-ui;">
       <slot />
     </main>
     <PrismicPreview {repositoryName} />
