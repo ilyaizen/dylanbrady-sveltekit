@@ -1,51 +1,65 @@
 <script lang="ts">
-  import { PrismicPreview } from '@prismicio/svelte/kit';
-  import { repositoryName } from '$lib/prismicio';
+  // Import necessary Svelte and SvelteKit modules
+  import { onMount } from 'svelte';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
   import { writable } from 'svelte/store';
+
+  // Import Prismic preview component
+  import { PrismicPreview } from '@prismicio/svelte/kit';
+  import { repositoryName } from '$lib/prismicio';
+
+  // Import GSAP for animations
+  import { gsap } from 'gsap';
+
+  // Import custom stores
+  import { loading } from '$lib/stores/loading';
+  import { darkMode } from '$lib/stores/darkMode';
+
+  // Import UI components and icons
+  import { Button } from '$lib/components/ui/button';
+  import { Moon, Sun, RotateCcw, Home, PencilLine, TvMinimalPlay } from 'lucide-svelte';
+  import * as Tooltip from '$lib/components/ui/tooltip';
+  import Separator from '$lib/components/ui/separator/separator.svelte';
+
+  // Import custom components
+  import Loader from '$lib/components/Loader.svelte';
+  import GradientCanvas from '$lib/components/GradientCanvas.svelte';
+  import Dock from '$lib/components/Dock.svelte';
+  import DockIcon from '$lib/components/DockIcon.svelte';
+
+  // Import styles
   import '@fontsource-variable/grandstander';
   import '@fontsource/abril-fatface';
   import '@fontsource-variable/montserrat';
   import '@fontsource/roboto';
   import '$lib/styles/hebrew-font.css';
   import '../app.css';
-  import Loader from '$lib/components/Loader.svelte';
-  import { loading } from '$lib/stores/loading';
-  import { darkMode } from '$lib/stores/darkMode';
-  import { gsap } from 'gsap';
-  import { Button } from '$lib/components/ui/button';
-  import { Moon, Sun, RotateCcw } from 'lucide-svelte';
-  import GradientCanvas from '$lib/components/GradientCanvas.svelte';
 
-  // Lucide Svelte
-  import { Home, PencilLine, TvMinimalPlay } from 'lucide-svelte';
-  // Simple Icons : simpleicons.org
-  // import TwitterSvg from '$lib/svg/web/x.svg';
-  // import GithubSvg from '$lib/svg/web/github.svg';
-  // import LinkedInSvg from '$lib/svg/web/linkedin.svg';
-  // import MailSvg from '$lib/svg/web/gmail.svg';
-  //    Shadcn Components
-  import * as Tooltip from '$lib/components/ui/tooltip';
-  import Separator from '$lib/components/ui/separator/separator.svelte';
-  //   Major Components
-  import Dock from '$lib/components/Dock.svelte';
-  import DockIcon from '$lib/components/DockIcon.svelte';
-
-  let navs = {
+  // Define navigation items
+  const navs = {
     navbar: [
       { label: 'Home', icon: Home, href: '/', onClick: () => goto('/') },
       { label: 'Blog', icon: PencilLine, href: '/blog', onClick: () => goto('/blog') },
       { label: 'Developer', icon: TvMinimalPlay, href: '/developer', onClick: () => goto('/developer') }
     ]
-    // contact: [
-    //   { label: 'Github', icon: GithubSvg, href: '#' },
-    //   { label: 'LinkedIn', icon: LinkedInSvg, href: '#' },
-    //   { label: 'X', icon: TwitterSvg, href: '#' },
-    //   { label: 'Email', icon: MailSvg, href: '#' }
-    // ]
   };
+
+  // Animation for pop-up effect
+  function popUpAnimation(node: HTMLElement) {
+    gsap.from(node, {
+      y: 100,
+      opacity: 0,
+      duration: 0.5,
+      ease: 'back.out(1.7)'
+    });
+
+    return {
+      destroy() {
+        // Clean up if needed
+      }
+    };
+  }
 
   // Store for the current language
   const lang = writable('en-us');
@@ -53,10 +67,11 @@
   // Determine if the current language is right-to-left
   $: isRTL = $lang === 'he';
 
-  let resourcesLoaded = false;
+  // Store for page load status
+  const pageLoaded = writable(false);
 
   onMount(() => {
-    // Subscribe to page changes to update the language
+    // Update language based on page data
     const unsubscribe = page.subscribe(($page) => {
       if ($page.data) {
         lang.set($page.params.lang || 'en-us');
@@ -76,16 +91,17 @@
       localStorage.setItem('darkMode', JSON.stringify($darkMode));
     });
 
+    // Set pageLoaded to true after a short delay
+    setTimeout(() => {
+      pageLoaded.set(true);
+    }, 500);
+
     // Cleanup subscriptions on component unmount
     return () => {
       unsubscribe();
       unsubscribeDarkMode();
     };
   });
-
-  function handleLoadComplete() {
-    resourcesLoaded = true;
-  }
 
   // Toggle dark mode
   function toggleDarkMode() {
@@ -109,27 +125,25 @@
     goto(newPath + $page.url.pathname.split('/').slice(2).join('/'));
   }
 
+  // Handler functions for dock icons
   function handleNavClick(href: string) {
-    console.log('Navigation clicked:', href);
     goto(href);
   }
 
   function handleLanguageToggle() {
-    console.log('Language toggle clicked');
     toggleLanguage();
   }
 
   function handleRefresh() {
-    console.log('Refresh clicked');
     window.location.reload();
   }
 
   function handleDarkModeToggle() {
-    console.log('Dark mode toggle clicked');
     toggleDarkMode();
   }
 </script>
 
+<!-- Add meta tags for SEO -->
 <svelte:head>
   <title>{$page.data.title}</title>
   {#if $page.data.meta_description}
@@ -144,11 +158,13 @@
   {/if}
 </svelte:head>
 
+<!-- Gradient background -->
 <GradientCanvas />
 
+<!-- Main content container -->
 <div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-5xl relative z-10">
   {#if $loading}
-    <Loader onLoadComplete={handleLoadComplete} />
+    <Loader onLoadComplete={() => ($loading = false)} />
   {:else}
     <main style="font-family: {isRTL ? 'Almoni' : 'Almoni'}, system-ui;">
       <slot />
@@ -157,63 +173,79 @@
   {/if}
 </div>
 
-<Dock
-  direction="middle"
-  class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
-  let:mouseX
-  let:distance
-  let:magnification
->
-  {#each navs.navbar as item}
-    <DockIcon {mouseX} {magnification} {distance} on:click={() => handleNavClick(item.href)}>
-      <Tooltip.Root>
-        <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
-          <svelte:component this={item.icon} size={22} strokeWidth={1.2} />
-        </Tooltip.Trigger>
-        <Tooltip.Content sideOffset={8}>
-          <p>{item.label}</p>
-        </Tooltip.Content>
-      </Tooltip.Root>
-    </DockIcon>
-  {/each}
-  <Separator orientation="vertical" class="h-full w-[0.6px]" />
-  <DockIcon {mouseX} {magnification} {distance} on:click={handleLanguageToggle}>
-    <Tooltip.Root>
-      <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
-        {$lang === 'en-us' ? 'עב' : 'En'}
-      </Tooltip.Trigger>
-      <Tooltip.Content sideOffset={8}>
-        <p>Toggle language</p>
-      </Tooltip.Content>
-    </Tooltip.Root>
-  </DockIcon>
-  <DockIcon {mouseX} {magnification} {distance} on:click={handleRefresh}>
-    <Tooltip.Root>
-      <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
-        <RotateCcw size={22} strokeWidth={1.2} />
-      </Tooltip.Trigger>
-      <Tooltip.Content sideOffset={8}>
-        <p>Refresh page</p>
-      </Tooltip.Content>
-    </Tooltip.Root>
-  </DockIcon>
-  <DockIcon {mouseX} {magnification} {distance} on:click={handleDarkModeToggle}>
-    <Tooltip.Root>
-      <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
-        {#if $darkMode}
-          <Sun size={22} strokeWidth={1.2} />
-        {:else}
-          <Moon size={22} strokeWidth={1.2} />
-        {/if}
-      </Tooltip.Trigger>
-      <Tooltip.Content sideOffset={8}>
-        <p>{$darkMode ? 'Light mode' : 'Dark mode'}</p>
-      </Tooltip.Content>
-    </Tooltip.Root>
-  </DockIcon>
-</Dock>
+<!-- Dock with navigation and control icons -->
+{#if $pageLoaded}
+  <div class="dock-container" use:popUpAnimation>
+    <Dock
+      direction="middle"
+      class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
+      let:mouseX
+      let:distance
+      let:magnification
+    >
+      <!-- Navigation icons -->
+      {#each navs.navbar as item}
+        <DockIcon {mouseX} {magnification} {distance} on:click={() => handleNavClick(item.href)}>
+          <Tooltip.Root>
+            <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+              <svelte:component this={item.icon} size={22} strokeWidth={1.2} />
+            </Tooltip.Trigger>
+            <Tooltip.Content sideOffset={8}>
+              <p>{item.label}</p>
+            </Tooltip.Content>
+          </Tooltip.Root>
+        </DockIcon>
+      {/each}
+
+      <Separator orientation="vertical" class="h-full w-[0.6px]" />
+
+      <!-- Language toggle -->
+      <DockIcon {mouseX} {magnification} {distance} on:click={handleLanguageToggle}>
+        <Tooltip.Root>
+          <Tooltip.Trigger
+            class="language-toggle hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0 flex items-center justify-center"
+          >
+            <span class="text-sm font-medium">{$lang === 'en-us' ? 'עב' : 'En'}</span>
+          </Tooltip.Trigger>
+          <Tooltip.Content sideOffset={8}>
+            <p>Toggle language</p>
+          </Tooltip.Content>
+        </Tooltip.Root>
+      </DockIcon>
+
+      <!-- Refresh button -->
+      <DockIcon {mouseX} {magnification} {distance} on:click={handleRefresh}>
+        <Tooltip.Root>
+          <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+            <RotateCcw size={22} strokeWidth={1.2} />
+          </Tooltip.Trigger>
+          <Tooltip.Content sideOffset={8}>
+            <p>Refresh page</p>
+          </Tooltip.Content>
+        </Tooltip.Root>
+      </DockIcon>
+
+      <!-- Dark mode toggle -->
+      <DockIcon {mouseX} {magnification} {distance} on:click={handleDarkModeToggle}>
+        <Tooltip.Root>
+          <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+            {#if $darkMode}
+              <Sun size={22} strokeWidth={1.2} />
+            {:else}
+              <Moon size={22} strokeWidth={1.2} />
+            {/if}
+          </Tooltip.Trigger>
+          <Tooltip.Content sideOffset={8}>
+            <p>{$darkMode ? 'Light mode' : 'Dark mode'}</p>
+          </Tooltip.Content>
+        </Tooltip.Root>
+      </DockIcon>
+    </Dock>
+  </div>
+{/if}
 
 <style>
+  /* Global styles for body */
   :global(body) {
     transition:
       background-color 0.5s,
@@ -221,7 +253,17 @@
     background-color: transparent;
   }
 
+  /* Dark mode styles */
   :global(body.dark) {
     color: #ffffff;
+  }
+
+  /* Dock container positioning */
+  .dock-container {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
   }
 </style>
