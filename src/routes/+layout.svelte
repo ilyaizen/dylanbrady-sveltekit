@@ -253,7 +253,7 @@
       <!-- Dark mode toggle -->
       <DockIcon {mouseX} {magnification} {distance} on:click={handleDarkModeToggle}>
         <Tooltip.Root>
-          <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+          <Tooltip.Trigger class="hover:bg-zinc-900/80 rounded-full p-3 mx-0">
             {#if $darkMode}
               <Sun size={22} strokeWidth={1.2} />
             {:else}
@@ -270,19 +270,6 @@
 {/if}
 
 <style>
-  /* Global styles for body */
-  :global(body) {
-    transition:
-      background-color 0.5s,
-      color 0.5s;
-    background-color: transparent;
-  }
-
-  /* Dark mode styles */
-  :global(body.dark) {
-    color: #ffffff;
-  }
-
   /* Dock container positioning */
   .dock-container {
     position: fixed;
