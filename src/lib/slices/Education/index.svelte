@@ -12,35 +12,18 @@
 
     tl.fromTo(
       '.education-heading-animation',
-      {
-        x: -5,
-        opacity: 0
-      },
-      {
-        x: 0,
-        opacity: 1,
-        duration: 0.4,
-        ease: 'expo.out'
-      }
+      { x: -5, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.3, ease: 'expo.out' }
     ).fromTo(
       '.education-item-animation',
-      {
-        y: 20,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.05,
-        ease: 'expo.out'
-      },
-      '-=0.4'
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.4, stagger: 0.03, ease: 'expo.out' },
+      '-=0.2'
     );
 
-    // Listen for the work animation complete event
+    // Start the education animation immediately after work animation completes
     const handleWorkAnimationComplete = () => {
-      startEducationAnimation();
+      tl.play();
     };
 
     window.addEventListener('workAnimationComplete', handleWorkAnimationComplete);
@@ -50,9 +33,7 @@
     };
   });
 
-  function startEducationAnimation() {
-    tl.play();
-  }
+  // Remove the startEducationAnimation function as it's no longer needed
 
   function getIconStyle(color: string | undefined, iconUrl: string) {
     return `

@@ -10,12 +10,12 @@
   onMount(() => {
     tl = gsap.timeline({ paused: true });
 
-    tl.fromTo('.work-heading-animation', { x: -5, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: 'expo.out' })
+    tl.fromTo('.work-heading-animation', { x: -5, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: 'expo.out' })
       .fromTo(
         '.work-item-animation',
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: 'expo.out' },
-        '-=0.4'
+        { y: 0, opacity: 1, duration: 0.4, stagger: 0.03, ease: 'expo.out' },
+        '-=0.2'
       )
       .call(() => {
         // Dispatch a custom event when work animation is complete
