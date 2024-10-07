@@ -5,6 +5,7 @@
 
   export let slice: Content.EducationSlice;
 
+  let sectionRef: HTMLElement;
   let tl: gsap.core.Timeline;
 
   onMount(() => {
@@ -21,15 +22,26 @@
       '-=0.2'
     );
 
-    // Start the education animation immediately after work animation completes
-    const handleWorkAnimationComplete = () => {
-      tl.play();
-    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            tl.play();
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
 
-    window.addEventListener('workAnimationComplete', handleWorkAnimationComplete);
+    if (sectionRef) {
+      observer.observe(sectionRef);
+    }
 
     return () => {
-      window.removeEventListener('workAnimationComplete', handleWorkAnimationComplete);
+      if (sectionRef) {
+        observer.unobserve(sectionRef);
+      }
     };
   });
 
@@ -38,19 +50,20 @@
   function getIconStyle(color: string | undefined, iconUrl: string) {
     return `
 			background-color: ${color || '#000000'};
-			-webkit-mask-image: url(${iconUrl});
-			mask-image: url(${iconUrl});
-			-webkit-mask-size: contain;
-			mask-size: contain;
-			-webkit-mask-repeat: no-repeat;
-			mask-repeat: no-repeat;
-			-webkit-mask-position: center;
-			mask-position: center;
+				-webkit-mask-image: url(${iconUrl});
+				mask-image: url(${iconUrl});
+				-webkit-mask-size: contain;
+				mask-size: contain;
+				-webkit-mask-repeat: no-repeat;
+				mask-repeat: no-repeat;
+				-webkit-mask-position: center;
+				mask-position: center;
 		`;
   }
 </script>
 
 <section
+  bind:this={sectionRef}
   class="max-w-xl mx-auto font-roboto"
   id="education"
   data-slice-type={slice.slice_type}

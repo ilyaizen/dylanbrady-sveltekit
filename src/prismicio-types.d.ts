@@ -4,7 +4,7 @@ import type * as prismic from '@prismicio/client';
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type PageDocumentDataSlicesSlice = EducationSlice | WorkSlice | HeroSlice;
+type PageDocumentDataSlicesSlice = ProjectsSlice | SkillsSlice | EducationSlice | WorkSlice | HeroSlice;
 
 /**
  * Content for Page documents
@@ -297,6 +297,131 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<'hero', HeroSliceVariation>;
 
 /**
+ * Primary content in *Projects → Default → Primary*
+ */
+export interface ProjectsSliceDefaultPrimary {
+  /**
+   * Projects Heading field in *Projects → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.default.primary.projects_heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  projects_heading: prismic.KeyTextField;
+
+  /**
+   * Projects Title field in *Projects → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.default.primary.projects_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  projects_title: prismic.KeyTextField;
+
+  /**
+   * Projects Description field in *Projects → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.default.primary.projects_description
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  projects_description: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for Projects Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ProjectsSliceDefault = prismic.SharedSliceVariation<
+  'default',
+  Simplify<ProjectsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Projects*
+ */
+type ProjectsSliceVariation = ProjectsSliceDefault;
+
+/**
+ * Projects Shared Slice
+ *
+ * - **API ID**: `projects`
+ * - **Description**: Projects
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ProjectsSlice = prismic.SharedSlice<'projects', ProjectsSliceVariation>;
+
+/**
+ * Item in *Skills → Default → Primary → Skills Item*
+ */
+export interface SkillsSliceDefaultPrimarySkillsItemItem {
+  /**
+   * Skill field in *Skills → Default → Primary → Skills Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: skills.default.primary.skills_item[].skill
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  skill: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Skills → Default → Primary*
+ */
+export interface SkillsSliceDefaultPrimary {
+  /**
+   * Skills Heading field in *Skills → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: skills.default.primary.skills_heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  skills_heading: prismic.KeyTextField;
+
+  /**
+   * Skills Item field in *Skills → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: skills.default.primary.skills_item[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  skills_item: prismic.GroupField<Simplify<SkillsSliceDefaultPrimarySkillsItemItem>>;
+}
+
+/**
+ * Default variation for Skills Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SkillsSliceDefault = prismic.SharedSliceVariation<'default', Simplify<SkillsSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *Skills*
+ */
+type SkillsSliceVariation = SkillsSliceDefault;
+
+/**
+ * Skills Shared Slice
+ *
+ * - **API ID**: `skills`
+ * - **Description**: Skills
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type SkillsSlice = prismic.SharedSlice<'skills', SkillsSliceVariation>;
+
+/**
  * Item in *Work → Default → Primary → Work Item*
  */
 export interface WorkSliceDefaultPrimaryWorkItemItem {
@@ -437,6 +562,15 @@ declare module '@prismicio/client' {
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      ProjectsSlice,
+      ProjectsSliceDefaultPrimary,
+      ProjectsSliceVariation,
+      ProjectsSliceDefault,
+      SkillsSlice,
+      SkillsSliceDefaultPrimarySkillsItemItem,
+      SkillsSliceDefaultPrimary,
+      SkillsSliceVariation,
+      SkillsSliceDefault,
       WorkSlice,
       WorkSliceDefaultPrimaryWorkItemItem,
       WorkSliceDefaultPrimary,

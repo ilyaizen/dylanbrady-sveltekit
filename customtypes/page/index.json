@@ -27,6 +27,12 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "projects": {
+              "type": "SharedSlice"
+            },
+            "skills": {
+              "type": "SharedSlice"
+            },
             "education": {
               "type": "SharedSlice"
             },

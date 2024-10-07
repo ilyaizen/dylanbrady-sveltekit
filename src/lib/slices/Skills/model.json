@@ -1,0 +1,42 @@
+{
+  "id": "skills",
+  "type": "SharedSlice",
+  "name": "Skills",
+  "description": "Skills",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "skills_heading": {
+          "type": "Text",
+          "config": {
+            "label": "Skills Heading",
+            "placeholder": ""
+          }
+        },
+        "skills_item": {
+          "type": "Group",
+          "config": {
+            "label": "Skills Item",
+            "repeat": true,
+            "fields": {
+              "skill": {
+                "type": "Text",
+                "config": {
+                  "label": "Skill",
+                  "placeholder": ""
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

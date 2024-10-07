@@ -2,10 +2,14 @@
 
 import Education from './Education/index.svelte';
 import Hero from './Hero/index.svelte';
+import Projects from './Projects/index.svelte';
+import Skills from './Skills/index.svelte';
 import Work from './Work/index.svelte';
 
 export const components = {
   education: Education,
   hero: Hero,
+  projects: Projects,
+  skills: Skills,
   work: Work
 };
