@@ -199,7 +199,7 @@
       {#each navs.navbar as item}
         <DockIcon {mouseX} {magnification} {distance} on:click={() => handleNavClick(item.href)}>
           <Tooltip.Root>
-            <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+            <Tooltip.Trigger class="hover:bg-yellow-500/80 transition-all duration-200 rounded-full p-3 mx-0">
               <svelte:component this={item.icon} size={22} strokeWidth={1.2} />
             </Tooltip.Trigger>
             <Tooltip.Content sideOffset={8}>
@@ -215,7 +215,7 @@
       <DockIcon {mouseX} {magnification} {distance} on:click={handleLanguageToggle}>
         <Tooltip.Root>
           <Tooltip.Trigger
-            class="language-toggle hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0 flex items-center justify-center"
+            class="language-toggle hover:bg-yellow-500/80 transition-all duration-200 rounded-full p-3 mx-0 flex items-center justify-center"
           >
             <span class="text-sm font-medium">{$lang === 'en-us' ? 'עב' : 'En'}</span>
           </Tooltip.Trigger>
@@ -228,7 +228,7 @@
       <!-- Refresh button -->
       <DockIcon {mouseX} {magnification} {distance} on:click={handleRefresh}>
         <Tooltip.Root>
-          <Tooltip.Trigger class="hover:bg-zinc-900/80 transition-all duration-200 rounded-full p-3 mx-0">
+          <Tooltip.Trigger class="hover:bg-yellow-500/80 transition-all duration-200 rounded-full p-3 mx-0">
             <RotateCcw size={22} strokeWidth={1.2} />
           </Tooltip.Trigger>
           <Tooltip.Content sideOffset={8}>
@@ -240,7 +240,7 @@
       <!-- Dark mode toggle -->
       <DockIcon {mouseX} {magnification} {distance} on:click={handleDarkModeToggle}>
         <Tooltip.Root>
-          <Tooltip.Trigger class="hover:bg-zinc-900/80 rounded-full p-3 mx-0">
+          <Tooltip.Trigger class="hover:bg-yellow-500/80 rounded-full p-3 mx-0">
             {#if $darkMode}
               <Sun size={22} strokeWidth={1.2} />
             {:else}
