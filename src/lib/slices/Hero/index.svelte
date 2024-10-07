@@ -87,7 +87,7 @@
         '-=0.6'
       )
       .fromTo(
-        '.about-heading',
+        '.about-heading-animation',
         {
           x: -5,
           opacity: 0
@@ -234,7 +234,7 @@
       {#if slice.primary.tag_line}
         <div class="flex flex-wrap font-roboto justify-center md:justify-start">
           {#each slice.primary.tag_line.split(' ') as word}
-            <span class="tagline-animation inline-block text-sm sm:text-base md:text-lg">{word}&nbsp;</span>
+            <span class="tagline-animation inline-block text-xl">{word}&nbsp;</span>
           {/each}
         </div>
       {/if}
@@ -250,7 +250,7 @@
   </div>
 
   <section id="about" class="font-roboto mt-8 md:mt-12 max-w-xl mx-auto">
-    <h2 class="text-lg sm:text-xl font-bold about-heading">{slice.primary.about_heading}</h2>
+    <h2 class="text-lg sm:text-xl font-bold about-heading-animation">{slice.primary.about_heading}</h2>
     <div class="max-w-full pt-2 sm:pt-4">
       {#if slice.primary.about_line}
         {#each slice.primary.about_line.split(' ') as word}

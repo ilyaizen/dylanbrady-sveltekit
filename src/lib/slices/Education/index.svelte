@@ -32,7 +32,7 @@
         y: 0,
         opacity: 1,
         duration: 0.6,
-        stagger: 0.2,
+        stagger: 0.05,
         ease: 'expo.out'
       },
       '-=0.4'
@@ -70,7 +70,7 @@
 </script>
 
 <section
-  class="max-w-xl mx-auto"
+  class="max-w-xl mx-auto font-roboto"
   id="education"
   data-slice-type={slice.slice_type}
   data-slice-variation={slice.variation}
@@ -95,21 +95,6 @@
               <div class="flex flex-col">
                 <h3 class="inline-flex items-center justify-start font-semibold leading-none text-xs sm:text-sm group">
                   {item.education_title}
-                  <span class="inline-flex gap-x-1"></span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-chevron-right size-4 translate-x-0 transform opacity-0 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:opacity-100 rotate-0"
-                  >
-                    <path d="m9 18 6-6-6-6"></path>
-                  </svg>
                 </h3>
                 <div class="font-sans text-xs">{item.education_description}</div>
               </div>

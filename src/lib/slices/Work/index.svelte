@@ -14,7 +14,7 @@
       .fromTo(
         '.work-item-animation',
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.2, ease: 'expo.out' },
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: 'expo.out' },
         '-=0.4'
       )
       .call(() => {
@@ -50,8 +50,13 @@
   }
 </script>
 
-<section class="max-w-xl mx-auto" id="work" data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
-  <h2 class="work-heading-animation text-xl font-bold pt-8 pb-4">{slice.primary.work_heading}</h2>
+<section
+  class="max-w-xl mx-auto font-roboto pt-8"
+  id="work"
+  data-slice-type={slice.slice_type}
+  data-slice-variation={slice.variation}
+>
+  <h2 class="work-heading-animation text-lg sm:text-xl font-bold pb-4">{slice.primary.work_heading}</h2>
   <div>
     {#each slice.primary.work_item as item}
       <div class="work-item-animation">
@@ -69,21 +74,6 @@
               <div class="flex flex-col">
                 <h3 class="inline-flex items-center justify-start font-semibold leading-none text-xs sm:text-sm group">
                   {item.work_title}
-                  <span class="inline-flex gap-x-1"></span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-chevron-right size-4 translate-x-0 transform opacity-0 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:opacity-100 rotate-0"
-                  >
-                    <path d="m9 18 6-6-6-6"></path>
-                  </svg>
                 </h3>
                 <div class="font-sans text-xs">{item.work_description}</div>
               </div>
