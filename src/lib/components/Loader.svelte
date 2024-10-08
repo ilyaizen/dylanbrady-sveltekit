@@ -56,7 +56,7 @@
 </script>
 
 <div class="loading-screen" bind:this={loadingElement}>
-  <div class="color-wheel"></div>
+  <div class="loader"></div>
 </div>
 
 <style>
@@ -67,30 +67,28 @@
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     z-index: 9999;
     opacity: 1;
+    background-color: rgba(255, 255, 255, 0.9);
   }
 
-  .color-wheel {
-    width: 300px;
-    height: 300px;
-    border-radius: 100%;
-    background: conic-gradient(in hsl longer hue, red 0 0);
-    animation: spin 0.3s linear infinite;
-    transform: translate(-50%, -50%) scale(15);
-    position: absolute;
-    top: 0;
-    left: 50%;
+  .loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
   }
 
   @keyframes spin {
     0% {
-      transform: translate(-50%, -50%) scale(15) rotate(0deg);
+      transform: rotate(0deg);
     }
     100% {
-      transform: translate(-50%, -50%) scale(15) rotate(360deg);
+      transform: rotate(360deg);
     }
   }
 </style>
