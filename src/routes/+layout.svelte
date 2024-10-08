@@ -53,8 +53,8 @@
   // Determine if the current language is right-to-left
   $: isRTL = $lang === 'he';
 
-  // Store for page load status
-  const pageLoaded = writable(false);
+  // Modify the pageLoaded store to include both page and loader status
+  const pageStatus = writable({ pageLoaded: false, loaderFinished: false });
 
   let lastScrollY = 0;
   const dockPosition = tweened(-100, {
@@ -85,12 +85,11 @@
 
     // Set pageLoaded to true after a short delay
     setTimeout(() => {
-      pageLoaded.set(true);
-      dockPosition.set(0); // Animate the dock into view
+      pageStatus.update((status) => ({ ...status, pageLoaded: true }));
     }, 500);
 
     const handleScroll = () => {
-      if (!$pageLoaded) return; // Don't handle scroll events until page is loaded
+      if (!$pageStatus.pageLoaded) return; // Don't handle scroll events until page is loaded
 
       const currentScrollY = window.scrollY;
       if (Math.abs(currentScrollY - lastScrollY) > 50) {
@@ -114,6 +113,15 @@
       window.removeEventListener('scroll', handleScroll);
     };
   });
+
+  // Function to handle loader completion
+  function handleLoaderComplete() {
+    loading.set(false);
+    pageStatus.update((status) => ({ ...status, loaderFinished: true }));
+  }
+
+  // Derive whether to show the dock based on both page load and loader status
+  $: showDock = $pageStatus.pageLoaded && $pageStatus.loaderFinished;
 
   // Toggle dark mode
   function toggleDarkMode() {
@@ -176,7 +184,7 @@
 <!-- Main content container -->
 <div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-3xl relative z-10">
   {#if $loading}
-    <Loader onLoadComplete={() => ($loading = false)} />
+    <Loader onLoadComplete={handleLoaderComplete} />
   {:else}
     <main style="font-family: {isRTL ? 'Almoni' : 'Almoni'}, system-ui;">
       <slot />
@@ -186,7 +194,7 @@
 </div>
 
 <!-- Dock with navigation and control icons -->
-{#if $pageLoaded}
+{#if showDock}
   <div class="dock-container" style="transform: translateY({$dockPosition}px);">
     <Dock
       direction="middle"
@@ -200,7 +208,8 @@
         <DockIcon {mouseX} {magnification} {distance} on:click={() => handleNavClick(item.href)}>
           <Tooltip.Root>
             <Tooltip.Trigger class="hover:bg-yellow-500/80 transition-all duration-200 rounded-full p-3 mx-0">
-              <svelte:component this={item.icon} size={22} strokeWidth={1.2} />
+              <span class="sr-only">{item.label}</span>
+              <svelte:component this={item.icon} size={22} strokeWidth={1.2} aria-hidden="true" />
             </Tooltip.Trigger>
             <Tooltip.Content sideOffset={8}>
               <p>{item.label}</p>
@@ -217,7 +226,8 @@
           <Tooltip.Trigger
             class="language-toggle hover:bg-yellow-500/80 transition-all duration-200 rounded-full p-3 mx-0 flex items-center justify-center"
           >
-            <span class="text-sm font-medium">{$lang === 'en-us' ? 'עב' : 'En'}</span>
+            <span class="sr-only">Toggle language</span>
+            <span aria-hidden="true" class="text-sm font-medium">{$lang === 'en-us' ? 'עב' : 'En'}</span>
           </Tooltip.Trigger>
           <Tooltip.Content sideOffset={8}>
             <p>Toggle language</p>
