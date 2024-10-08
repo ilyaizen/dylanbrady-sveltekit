@@ -220,33 +220,6 @@
 
       <Separator orientation="vertical" class="h-full w-[0.6px]" />
 
-      <!-- Language toggle -->
-      <DockIcon {mouseX} {magnification} {distance} on:click={handleLanguageToggle}>
-        <Tooltip.Root>
-          <Tooltip.Trigger
-            class="language-toggle hover:bg-yellow-500/80 transition-all duration-200 rounded-full p-3 mx-0 flex items-center justify-center"
-          >
-            <span class="sr-only">Toggle language</span>
-            <span aria-hidden="true" class="text-sm font-medium">{$lang === 'en-us' ? 'עב' : 'En'}</span>
-          </Tooltip.Trigger>
-          <Tooltip.Content sideOffset={8}>
-            <p>Toggle language</p>
-          </Tooltip.Content>
-        </Tooltip.Root>
-      </DockIcon>
-
-      <!-- Refresh button -->
-      <DockIcon {mouseX} {magnification} {distance} on:click={handleRefresh}>
-        <Tooltip.Root>
-          <Tooltip.Trigger class="hover:bg-yellow-500/80 transition-all duration-200 rounded-full p-3 mx-0">
-            <RotateCcw size={22} strokeWidth={1.2} />
-          </Tooltip.Trigger>
-          <Tooltip.Content sideOffset={8}>
-            <p>Refresh page</p>
-          </Tooltip.Content>
-        </Tooltip.Root>
-      </DockIcon>
-
       <!-- Dark mode toggle -->
       <DockIcon {mouseX} {magnification} {distance} on:click={handleDarkModeToggle}>
         <Tooltip.Root>
