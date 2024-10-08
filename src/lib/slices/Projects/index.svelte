@@ -4,7 +4,11 @@
   export let slice: Content.ProjectsSlice;
 </script>
 
-<section class="max-w-xl mx-auto font-roboto" data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
+<section
+  class="max-w-xl mx-auto font-roboto pb-72"
+  data-slice-type={slice.slice_type}
+  data-slice-variation={slice.variation}
+>
   <section id="projects">
     <div class="space-y-12 w-full py-12">
       <div style="opacity: 1; filter: blur(0px); transform: translateY(-6px) translateZ(0px);">
