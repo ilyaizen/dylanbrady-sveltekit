@@ -62,7 +62,10 @@
     easing: expoOut
   });
 
+  let isJsEnabled = false;
+
   onMount(() => {
+    isJsEnabled = true;
     // Update language based on page data
     const unsubscribe = page.subscribe(($page) => {
       if ($page.data) {
@@ -165,6 +168,16 @@
 
 <!-- Add meta tags for SEO -->
 <svelte:head>
+  <noscript>
+    <style>
+      .js-only {
+        display: none !important;
+      }
+      .no-js {
+        display: block !important;
+      }
+    </style>
+  </noscript>
   <title>{$page.data.title}</title>
   {#if $page.data.meta_description}
     <meta name="description" content={$page.data.meta_description} />
@@ -183,8 +196,10 @@
 
 <!-- Main content container -->
 <div dir={isRTL ? 'rtl' : 'ltr'} class="px-4 md:px-6 mx-auto space-y-8 w-full max-w-3xl relative z-10">
-  {#if $loading}
-    <Loader onLoadComplete={handleLoaderComplete} />
+  {#if isJsEnabled && $loading}
+    <div class="js-only">
+      <Loader onLoadComplete={handleLoaderComplete} />
+    </div>
   {:else}
     <main style="font-family: {isRTL ? 'Almoni' : 'Almoni'}, system-ui;">
       <slot />
@@ -195,7 +210,7 @@
 
 <!-- Dock with navigation and control icons -->
 {#if showDock}
-  <div class="dock-container" style="transform: translateY({$dockPosition}px);">
+  <div class="dock-container js-only" style="transform: translateY({$dockPosition}px);">
     <Dock
       direction="middle"
       class="fixed top-0 left-1/2 -translate-x-1/2 z-50 rounded-full bg-white/20 dark:bg-black/20"
